@@ -1,5 +1,10 @@
 # Honolate – Localization for Hono in Deno
 
+[![JSR Scope](https://jsr.io/badges/@wuespace)](https://jsr.io/@wuespace)
+[![JSR](https://jsr.io/badges/@wuespace/honolate)](https://jsr.io/@wuespace/honolate)
+[![JSR Score](https://jsr.io/badges/@wuespace/honolate/score)](https://jsr.io/@wuespace/honolate)
+[![Publish Workflow](https://github.com/wuespace/honolate/actions/workflows/publish-jsr.yml/badge.svg)](https://github.com/wuespace/honolate/actions/workflows/publish-jsr.yml)
+
 Honolate is a localization library designed specifically for the Hono web
 framework in Deno. It provides an easy way to manage translations and localize
 your web applications.
