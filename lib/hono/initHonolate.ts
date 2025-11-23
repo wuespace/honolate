@@ -6,7 +6,9 @@ import type { InitHonolateOptions } from "./InitHonolateOptions.ts";
 import type { LocalizedValue } from "./LocalizedValue.ts";
 import { ensureRequestLanguage } from "./ensureRequestLanguage.ts";
 
-export const initHonolate = <T extends string>(options: InitHonolateOptions<T>) => {
+export const initHonolate = <T extends string>(
+  options: InitHonolateOptions<T>,
+) => {
   // import – without awaiting – any necessary resources based on options
   // runs on startup => may be reasonably slow
   const languages = new Map<T, Record<string, LocalizedValue>>();

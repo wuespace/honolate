@@ -1,6 +1,10 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write=./locales/ --allow-env
 
-import { initHonolate, type InitHonolateOptions, runCLI } from "@wuespace/honolate";
+import {
+  initHonolate,
+  type InitHonolateOptions,
+  runCLI,
+} from "@wuespace/honolate";
 
 const config: InitHonolateOptions<"en" | "de"> = {
   defaultLanguage: "en",

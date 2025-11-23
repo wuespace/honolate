@@ -104,7 +104,8 @@ import { lt } from "@wuespace/honolate";
 export const greeting = lt`Hello world!`;
 ```
 
-Later, inside a component, you can resolve the lazy string using the `t` function:
+Later, inside a component, you can resolve the lazy string using the `t`
+function:
 
 ```typescript
 import { t } from "@wuespace/honolate";
@@ -126,10 +127,16 @@ by re-running the `i18n.ts` script:
 ./i18n.ts
 ```
 
-This will scan your code for new terms and add them to the respective locale files.
+This will scan your code for new terms and add them to the respective locale
+files.
 
-Note that the middleware automatically loads the localization files on startup, so you can just edit the JSON files, restart your application, and see the changes immediately.
+Note that the middleware automatically loads the localization files on startup,
+so you can just edit the JSON files, restart your application, and see the
+changes immediately.
 
 ## About the name
 
-The name "Honolate" is a combination of "Hono" and "translate", reflecting its purpose as a localization library for the Hono framework. It also is a play on the fact that lazy strings are only translated when needed (late), allowing for a more powerful and flexible localization approach.
+The name "Honolate" is a combination of "Hono" and "translate", reflecting its
+purpose as a localization library for the Hono framework. It also is a play on
+the fact that lazy strings are only translated when needed (late), allowing for
+a more powerful and flexible localization approach.
