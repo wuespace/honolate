@@ -9,10 +9,13 @@ import { runLanguageDetector } from './runLanguageDetector.ts';
  * @param options Initialization options
  * @returns the determined language
  */
-export async function ensureRequestLanguage<T extends string>(c: Context<HolateContext<T>>, options: InitHolateOptions<T>) {
+export async function ensureRequestLanguage<T extends string>(
+	c: Context<HolateContext<T>>,
+	options: InitHolateOptions<T>,
+) {
 	if (!c.get('language')) {
 		// run language detection logic
-		console.warn('No language set on context – running language detector from holate middleware');
+		// console.warn('No language set on context – running language detector from holate middleware');
 		await runLanguageDetector<T>(options, c);
 	}
 	c.set('language', c.var.language ?? options.defaultLanguage);

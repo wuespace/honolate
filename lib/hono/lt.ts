@@ -1,6 +1,6 @@
 import { escapeKey } from '../common/escapeKey.ts';
-import { LazyLocalyzedString } from './LazyLocalyzedString.ts';
-import { LocalyzedStringValue } from './LocalyzedStringValue.ts';
+import type { LazyLocalyzedString } from './LazyLocalyzedString.ts';
+import type { LocalyzedStringValue } from './LocalyzedStringValue.ts';
 
 export function lt(
 	strings: TemplateStringsArray,

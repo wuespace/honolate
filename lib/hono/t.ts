@@ -1,10 +1,8 @@
-import { LazyLocalyzedString } from './LazyLocalyzedString.ts';
-import { LocalyzedStringValue } from './LocalyzedStringValue.ts';
-import { lt } from '../hono/lt.ts';
-// import { loadedLocalizations } from '../main.ts';
 import { unescapeKey } from '../common/unescapeKey.ts';
-import { LocaleNotFoundError, NoRequestContextError, useLocale } from '../hono/useLocale.ts';
-import { neverThrow } from '../common/never-throw.ts';
+import { lt } from '../hono/lt.ts';
+import { getLocalizationMap } from './getLocalizationMap.ts';
+import type { LazyLocalyzedString } from './LazyLocalyzedString.ts';
+import type { LocalyzedStringValue } from './LocalyzedStringValue.ts';
 
 export function t(
 	strings: TemplateStringsArray,
@@ -24,68 +22,32 @@ export function t(
 	}
 	const lls = string as LazyLocalyzedString;
 
-	const locale = getLocale();
-	return locale;
-	// const localizationMap = loadedLocalizations.get(locale);
-	// if (localizationMap) {
-	// 	const localizedString = localizationMap.get(lls.localizationKey);
-	// 	if (localizedString) {
-	// 		let translated = localizedString;
-	// 		lls.values.forEach((value, index) => {
-	// 			let stringValue: string;
-	// 			if (typeof value === 'object' && 'localizationKey' in value) {
-	// 				stringValue = t(value);
-	// 			} else {
-	// 				stringValue = String(value);
-	// 			}
-	// 			const placeholder = `{${index}}`;
-	// 			translated = translated.replace(placeholder, stringValue);
-	// 		});
-	// 		return translated;
-	// 	}
-	// }
-	// console.log(`Translating for locale: ${locale}`);
-	// let translated = unescapeKey(lls.localizationKey);
-	// lls.values.forEach((value, index) => {
-	// 	let stringValue: string;
-	// 	if (typeof value === 'object' && 'localizationKey' in value) {
-	// 		stringValue = t(value);
-	// 	} else {
-	// 		stringValue = String(value);
-	// 	}
-	// 	const placeholder = `{${index}}`;
-	// 	translated = translated.replace(placeholder, stringValue);
-	// });
-	// return translated;
-}
+	const map = getLocalizationMap();
+	if (!(lls.localizationKey in map)) {
+		// Key not found, return default value
+		map[lls.localizationKey] = lls.localizationKey;
+	}
 
-function getLocale(): string {
-	const rawLocale = neverThrow(() => useLocale());
-	if (rawLocale instanceof NoRequestContextError) {
-		console.warn(
-			new Error(
-				"t was called outside of a request context. Using default locale 'default'."
-				+ "\nMake sure to wrap t calls within a Hono JSX Renderer context."
-				+ '\nIf you\'re not in a functional component, use asFC() to wrap the parameter of c.render():'
-				+ "\nc.render(asFC(() => <>{t`...`}</>))"
-				+ "\ninstead of c.render(<>{t`...`}</>)",
-				{ cause: rawLocale },
-			)
-		)
-		return 'default';
+	let str = map[lls.localizationKey];
+
+	for (let i = 0; i < lls.values.length; i++) {
+		if (str.indexOf(`{${i}}`) === -1) {
+			console.warn(
+				new Error(
+					`Placeholder {${i}} not found in localized string for key "${lls.localizationKey}".` +
+						`\nLocalized string: "${str}"` +
+						`\nMake sure the number of placeholders in the localized string matches the number of values provided.`,
+				),
+			);
+		} else {
+			// fill in value
+			// replace all unescaped occurrences of {i} with the value lls.values[i]
+			str = str.replaceAll(
+				new RegExp(`(?<!\\\\)\\{${i}\\}`, 'g'),
+				String(lls.values[i]),
+			);
+		}
 	}
-	if (rawLocale instanceof LocaleNotFoundError) {
-		console.error(new Error(
-			"Locale not found in request context. Using default locale 'default'."
-			+ "\nMake sure to set the locale in the request context before calling t."
-			+ "\nOne option to do so is to use the languageDetector middleware provided by hono (@hono/hono/language).",
-			{ cause: rawLocale },
-		));
-		return 'default';
-	}
-	if (rawLocale instanceof Error) {
-		console.error(rawLocale);
-		return 'default';
-	}
-	return rawLocale;
+
+	return unescapeKey(str);
 }

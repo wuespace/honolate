@@ -1,6 +1,6 @@
-import * as ts from 'typescript';
-import { Extractions } from './Extractions.ts';
 import { expandGlob } from '@std/fs';
+import * as ts from 'typescript';
+import type { Extractions } from './Extractions.ts';
 
 /**
  * Represents a TypeScript source file and provides utilities for parsing and extracting
@@ -25,7 +25,7 @@ export class TypeScriptSourceFile {
 		public fileName: string,
 		public content: string,
 		public extractions: Extractions,
-	) { }
+	) {}
 
 	/**
 	 * Creates and returns a TypeScript SourceFile object from the current file's content.

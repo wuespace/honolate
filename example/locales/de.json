@@ -1,4 +1,5 @@
 {
-  "Hello world!": "",
-  "ABC {0} DEF": ""
+	"Hello world!": "Hallo Welt!",
+	"ABC {0} DEF": "Deutsches ABC {0} DEF",
+	"Welcome to the {{}}}}{{ {0} {1} {{0}} {{1}} homepage {0}!": ""
 }

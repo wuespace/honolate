@@ -1,7 +1,7 @@
 import { argv } from 'node:process';
 import { normalizePath } from '../common/normalizePath.ts';
-import { InitHolateOptions } from '../hono/InitHolateOptions.ts';
-import { Extractions } from './Extractions.ts';
+import type { InitHolateOptions } from '../hono/InitHolateOptions.ts';
+import type { Extractions } from './Extractions.ts';
 
 export class JsonWriter<T extends string> {
 	public readonly isReadOnly: boolean;
@@ -11,7 +11,7 @@ export class JsonWriter<T extends string> {
 		public extractions: Extractions,
 		public readonly issues = new Set<string>(),
 	) {
-		this.isReadOnly = argv.map(s => s.toLowerCase()).includes('--read-only');
+		this.isReadOnly = argv.map((s) => s.toLowerCase()).includes('--read-only');
 	}
 
 	public get isDirty(): boolean {
@@ -55,7 +55,7 @@ export class JsonWriter<T extends string> {
 	}
 
 	private getMissingKeys(
-		statusQuo: Record<string, string>
+		statusQuo: Record<string, string>,
 	): string[] {
 		const missingKeys: string[] = [];
 		for (const extraction of this.extractions.getExtractions()) {
@@ -67,11 +67,14 @@ export class JsonWriter<T extends string> {
 	}
 
 	private getSuperfluousKeys(
-		statusQuo: Record<string, string>
+		statusQuo: Record<string, string>,
 	): string[] {
 		const superfluousKeys: string[] = [];
 		for (const key of Object.keys(statusQuo)) {
-			if (!this.extractions.getExtractions().map(e => e.localizationKey).includes(key)) {
+			if (
+				!this.extractions.getExtractions().map((e) => e.localizationKey)
+					.includes(key)
+			) {
 				superfluousKeys.push(key);
 			}
 		}

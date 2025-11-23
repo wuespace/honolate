@@ -1,4 +1,4 @@
-import { LocalizedValue } from './LocalizedValue.ts';
+import type { LocalizedValue } from './LocalizedValue.ts';
 
 export type HolateContext<T extends string> = {
 	Variables: {
