@@ -3,6 +3,14 @@ import { Extractions } from "./Extractions.ts";
 import { JsonWriter } from "./JsonWriter.ts";
 import { TypeScriptSourceFile } from "./TypeScriptSourceFile.ts";
 
+/**
+ * Runs the i18n extraction CLI with the given options.
+ * @param options the {@link InitHonolateOptions} for the project
+ * @param rootDir the root directory of the project. Usually `import.meta.dirname`.
+ *
+ * @example Running from the configuration options
+ * import.meta.main && await runCLI(options, import.meta.dirname);
+ */
 export async function runCLI({
   pattern = "**/*.{ts,tsx}",
   languages,
