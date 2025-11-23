@@ -1,5 +1,5 @@
 import { useRequestContext } from '@hono/hono/jsx-renderer';
-import { neverThrow } from '../common/never-throw.ts';
+import { neverThrow } from '../common/neverThrow.ts';
 
 export function getLocalizationMap(): Record<string, string> {
 	const ctx = neverThrow(() => useRequestContext());
@@ -7,10 +7,10 @@ export function getLocalizationMap(): Record<string, string> {
 		console.warn(
 			new Error(
 				"t was called outside of a request context. Using default locale 'default'." +
-					'\nMake sure to wrap t calls within a Hono JSX Renderer context.' +
-					"\nIf you're not in a functional component, use asFC() to wrap the parameter of c.render():" +
-					'\nc.render(asFC(() => <>{t`...`}</>))' +
-					'\ninstead of c.render(<>{t`...`}</>)',
+				'\nMake sure to wrap t calls within a Hono JSX Renderer context.' +
+				"\nIf you're not in a functional component, use asFC() to wrap the parameter of c.render():" +
+				'\nc.render(asFC(() => <>{t`...`}</>))' +
+				'\ninstead of c.render(<>{t`...`}</>)',
 				{ cause: ctx },
 			),
 		);
@@ -22,7 +22,7 @@ export function getLocalizationMap(): Record<string, string> {
 		console.warn(
 			new Error(
 				'Localized values not found in request context. Using empty localization map.' +
-					'\nMake sure to update the localization files and initialize Holate middleware correctly.',
+				'\nMake sure to update the localization files and initialize Holate middleware correctly.',
 				{ cause: ctx },
 			),
 		);

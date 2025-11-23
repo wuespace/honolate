@@ -1,5 +1,5 @@
 import { createMiddleware } from '@hono/hono/factory';
-import { neverThrow } from '../common/never-throw.ts';
+import { neverThrow } from '../common/neverThrow.ts';
 import { normalizePath } from '../common/normalizePath.ts';
 import type { HolateContext } from './HolateContext.ts';
 import type { InitHolateOptions } from './InitHolateOptions.ts';
