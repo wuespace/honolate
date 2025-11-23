@@ -4,6 +4,10 @@ import { neverThrow } from "../common/neverThrow.ts";
 export class LocaleNotFoundError extends Error {}
 export class NoRequestContextError extends Error {}
 
+/**
+ * Returns the current locale code. Must be used within a Hono JSX Renderer context.
+ * @returns the current locale code
+ */
 export function useLocale(): string {
   const ctx = neverThrow(() => useRequestContext());
   if (ctx instanceof Error) {

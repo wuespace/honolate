@@ -6,6 +6,30 @@ import type { InitHonolateOptions } from "./InitHonolateOptions.ts";
 import type { LocalizedValue } from "./LocalizedValue.ts";
 import { ensureRequestLanguage } from "./ensureRequestLanguage.ts";
 
+/**
+ * Initializes Honolate with the given options.
+ *
+ * Make sure to add the returned middleware to your Hono app before any route handlers that use localization.
+ *
+ * @param options the options with which Honolate will be initialized. See {@link InitHonolateOptions}
+ * @returns the middleware required to show localized strings using Honolate
+ *
+ * @example
+ * import { InitHonolateOptions, initHonolate } from '@wuespace/honolate';
+ *
+ * const honolateOptions: InitHonolateOptions<'en' | 'de'> = {
+ *   defaultLanguage: 'en',
+ *   languages: {
+ *     en: './locales/en.json',
+ *     de: './locales/de.json',
+ *   },
+ *   // optional: add custom language detection logic here
+ * };
+ *
+ * const app = new Hono();
+ * app.use('*', initHonolate(honolateOptions));
+ * // ...other middlewares and route handlers
+ */
 export const initHonolate: <T extends string>(
   options: InitHonolateOptions<T>,
 ) => ReturnType<typeof createMiddleware<HonolateContext<T>>> = <
@@ -18,30 +42,7 @@ export const initHonolate: <T extends string>(
   const languages = new Map<T, Record<string, LocalizedValue>>();
 
   for (const lang in options.languages) {
-    const path = options.languages[lang as T];
-    const module = neverThrow(() => Deno.readFileSync(normalizePath(path)));
-    if (module instanceof Error) {
-      console.error(
-        `Failed to load language file for ${lang} at ${path}:`,
-        module,
-      );
-      languages.set(lang as T, {});
-      continue;
-    }
-
-    const decodedModule = new TextDecoder().decode(module);
-    const parsedModule = neverThrow(() => JSON.parse(decodedModule));
-
-    if (parsedModule instanceof Error) {
-      console.error(
-        `Failed to parse language file for ${lang} at ${path}:`,
-        parsedModule,
-      );
-      languages.set(lang as T, {});
-      continue;
-    }
-
-    languages.set(lang as T, parsedModule as Record<string, LocalizedValue>);
+    languages.set(lang, loadLanguage(options.languages[lang]));
   }
 
   return createMiddleware<HonolateContext<T>>(async (c, next) => {
@@ -56,3 +57,39 @@ export const initHonolate: <T extends string>(
     return next();
   });
 };
+
+/**
+ * Loads a language file from the given path.
+ * @param languagePath the path to the language
+ * @returns the loaded localization map
+ */
+function loadLanguage(languagePath: string): Record<string, LocalizedValue> {
+  // Load
+  const module = neverThrow(() =>
+    Deno.readFileSync(normalizePath(languagePath))
+  );
+
+  if (module instanceof Error) {
+    // Handle file read error
+    console.error(
+      `Failed to load language file at ${languagePath}:`,
+      module,
+    );
+    return {};
+  }
+
+  // Parse
+  const decodedModule = new TextDecoder().decode(module);
+  const parsedModule = neverThrow(() => JSON.parse(decodedModule));
+
+  if (parsedModule instanceof Error) {
+    // Handle JSON parse error
+    console.error(
+      `Failed to parse language file at ${languagePath}:`,
+      parsedModule,
+    );
+    return {};
+  }
+
+  return parsedModule as Record<string, LocalizedValue>;
+}

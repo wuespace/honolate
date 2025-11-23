@@ -1,6 +1,9 @@
 import { useRequestContext } from "@hono/hono/jsx-renderer";
 import { neverThrow } from "../common/neverThrow.ts";
 
+/**
+ * @returns the current locale's localization map, mapping localization keys to their respective translations
+ */
 export function getLocalizationMap(): Record<string, string> {
   const ctx = neverThrow(() => useRequestContext());
   if (ctx instanceof Error) {

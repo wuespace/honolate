@@ -4,6 +4,45 @@ import { getLocalizationMap } from "./getLocalizationMap.ts";
 import type { LazyLocalyzedString } from "./LazyLocalyzedString.ts";
 import type { LocalyzedStringValue } from "./LocalyzedStringValue.ts";
 
+/**
+ * Resolves a localized string based on the current localization map.
+
+ * @returns the localized string with placeholders filled in
+ *
+ * Can be used as a template string tag or as a function with a LazyLocalyzedString.
+ *
+ * Can only be called inside a functional component. To use this directly in route handlers,
+ * use {@link asFC} to wrap the handler as a functional component.
+ *
+ * This cannot be used outside of Hono request context (e.g., in plain Deno scripts),
+ * since it relies on the request context to provide the current language's localization map.
+ *
+ * @example Example as template string tag:
+ * ```ts
+ * const greeting = t`greeting.hello.${userName}`;
+ * ```
+ *
+ * @example Example with LazyLocalyzedString:
+ * ```ts
+ * const lls: LazyLocalyzedString = {
+ *   localizationKey: "greeting.hello",
+ *   values: [userName],
+ * };
+ * const greeting = t(lls);
+ * ```
+ *
+ * @example Using with asFC in route handler:
+ * ```ts
+ * import { asFC, t } from '@wuespace/honolate';
+ *
+ * app.get('/greet', c => {
+ *   return c.render(asFC(() => {
+ *     const greeting = t`Hello ${c.req.param('name')}!`;
+ *     return greeting;
+ *   }));
+ * });
+ * ```
+ */
 export function t(
   strings: TemplateStringsArray,
   ...values: LocalyzedStringValue[]
