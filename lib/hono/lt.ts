@@ -5,7 +5,7 @@ import type { LocalyzedStringValue } from "./LocalyzedStringValue.ts";
 export function lt(
   strings: TemplateStringsArray,
   ...values: LocalyzedStringValue[]
-) {
+): LazyLocalyzedString {
   const escaped = strings.map(escapeKey);
   let localizationKey = "";
   for (let i = 0; i < escaped.length; i++) {
@@ -15,5 +15,5 @@ export function lt(
   return {
     localizationKey,
     values,
-  } as LazyLocalyzedString;
+  };
 }

@@ -6,7 +6,11 @@ import type { InitHonolateOptions } from "./InitHonolateOptions.ts";
 import type { LocalizedValue } from "./LocalizedValue.ts";
 import { ensureRequestLanguage } from "./ensureRequestLanguage.ts";
 
-export const initHonolate = <T extends string>(
+export const initHonolate: <T extends string>(
+  options: InitHonolateOptions<T>,
+) => ReturnType<typeof createMiddleware<HonolateContext<T>>> = <
+  T extends string,
+>(
   options: InitHonolateOptions<T>,
 ) => {
   // import – without awaiting – any necessary resources based on options

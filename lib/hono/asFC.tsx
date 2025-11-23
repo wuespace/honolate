@@ -31,6 +31,6 @@ import type { FC } from "@hono/hono/jsx";
  *
  * @see {@link t}
  */
-export function asFC(X: FC) {
+export function asFC(X: FC): ReturnType<FC> {
   return <X />;
 }

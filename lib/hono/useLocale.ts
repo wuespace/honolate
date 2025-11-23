@@ -4,7 +4,7 @@ import { neverThrow } from "../common/neverThrow.ts";
 export class LocaleNotFoundError extends Error {}
 export class NoRequestContextError extends Error {}
 
-export function useLocale() {
+export function useLocale(): string {
   const ctx = neverThrow(() => useRequestContext());
   if (ctx instanceof Error) {
     throw new NoRequestContextError(
