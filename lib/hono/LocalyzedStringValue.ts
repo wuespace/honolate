@@ -1,3 +1,3 @@
-import { LazyLocalyzedString } from "./LazyLocalyzedString.ts";
+import { LazyLocalyzedString } from './LazyLocalyzedString.ts';
 
 export type LocalyzedStringValue = string | number | LazyLocalyzedString;

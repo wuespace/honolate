@@ -26,5 +26,5 @@
  * unescapeKey('No escaping here') // 'No escaping here'
  */
 export function unescapeKey(key: string): string {
-  return key.replace(/{{/g, "{").replace(/}}/g, "}");
+	return key.replace(/{{/g, '{').replace(/}}/g, '}');
 }

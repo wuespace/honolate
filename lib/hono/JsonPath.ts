@@ -1,0 +1,2 @@
+
+export type JsonPath = string;
