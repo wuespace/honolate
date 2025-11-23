@@ -1,24 +1,20 @@
 {
-	"name": "@wuespace/holate",
-	"tasks": {
-		"dev": "deno run -A --watch example/main.tsx",
-		"cli": "deno run -A --watch cli.ts",
-		"update:i18n": "deno run -A example/i18n.ts"
-	},
-	"exports": "./lib/mod.ts",
-	"imports": {
-		"@hono/hono": "jsr:@hono/hono@4",
-		"@std/assert": "jsr:@std/assert@1",
-		"@std/fs": "jsr:@std/fs@^1.0.20",
-		"typescript": "npm:typescript@^5.9.3",
-		"@wuespace/holate": "./lib/mod.ts"
-	},
-	"compilerOptions": {
-		"jsx": "react-jsx",
-		"jsxImportSource": "@hono/hono/jsx"
-	},
-	"fmt": {
-		"useTabs": true,
-		"singleQuote": true
-	}
+  "name": "@wuespace/honolate",
+  "tasks": {
+    "dev": "deno run -A --watch example/main.tsx",
+    "cli": "deno run -A --watch cli.ts",
+    "update:i18n": "deno run -A example/i18n.ts"
+  },
+  "exports": "./lib/mod.ts",
+  "imports": {
+    "@hono/hono": "jsr:@hono/hono@4",
+    "@std/assert": "jsr:@std/assert@1",
+    "@std/fs": "jsr:@std/fs@^1.0.20",
+    "typescript": "npm:typescript@^5.9.3",
+    "@wuespace/honolate": "./lib/mod.ts"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "@hono/hono/jsx"
+  }
 }

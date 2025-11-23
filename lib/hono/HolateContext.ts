@@ -1,8 +1,8 @@
-import type { LocalizedValue } from './LocalizedValue.ts';
+import type { LocalizedValue } from "./LocalizedValue.ts";
 
-export type HolateContext<T extends string> = {
-	Variables: {
-		language?: T;
-		localizedValues?: Record<string, LocalizedValue>;
-	};
+export type HonolateContext<T extends string> = {
+  Variables: {
+    language?: T;
+    localizedValues?: Record<string, LocalizedValue>;
+  };
 };

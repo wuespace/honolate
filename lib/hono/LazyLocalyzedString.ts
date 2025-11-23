@@ -1,6 +1,6 @@
-import type { LocalyzedStringValue } from './LocalyzedStringValue.ts';
+import type { LocalyzedStringValue } from "./LocalyzedStringValue.ts";
 
 export type LazyLocalyzedString = {
-	localizationKey: string;
-	values: LocalyzedStringValue[];
+  localizationKey: string;
+  values: LocalyzedStringValue[];
 };

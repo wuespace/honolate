@@ -1,7 +1,7 @@
-import { Context } from '@hono/hono';
-import { HolateContext } from './HolateContext.ts';
-import { InitHolateOptions } from './InitHolateOptions.ts';
-import { runLanguageDetector } from './runLanguageDetector.ts';
+import { Context } from "@hono/hono";
+import { HonolateContext } from "./HonolateContext.ts";
+import { InitHonolateOptions } from "./InitHonolateOptions.ts";
+import { runLanguageDetector } from "./runLanguageDetector.ts";
 
 /**
  * Ensure that the request has a language set, using detection if necessary
@@ -10,17 +10,17 @@ import { runLanguageDetector } from './runLanguageDetector.ts';
  * @returns the determined language
  */
 export async function ensureRequestLanguage<T extends string>(
-	c: Context<HolateContext<T>>,
-	options: InitHolateOptions<T>,
+  c: Context<HonolateContext<T>>,
+  options: InitHonolateOptions<T>,
 ) {
-	if (!c.get('language')) {
-		// run language detection logic
-		// console.warn('No language set on context – running language detector from holate middleware');
-		await runLanguageDetector<T>(options, c);
-	}
-	c.set('language', c.var.language ?? options.defaultLanguage);
+  if (!c.get("language")) {
+    // run language detection logic
+    // console.warn('No language set on context – running language detector from honolate middleware');
+    await runLanguageDetector<T>(options, c);
+  }
+  c.set("language", c.var.language ?? options.defaultLanguage);
 
-	// Load localized values for the selected language
-	const language = c.get('language') as T;
-	return language;
+  // Load localized values for the selected language
+  const language = c.get("language") as T;
+  return language;
 }

@@ -1,4 +1,4 @@
-import type { FC } from '@hono/hono/jsx';
+import type { FC } from "@hono/hono/jsx";
 
 /**
  * Converts a JSX element into a functional component.
@@ -32,5 +32,5 @@ import type { FC } from '@hono/hono/jsx';
  * @see {@link t}
  */
 export function asFC(X: FC) {
-	return <X />;
+  return <X />;
 }
