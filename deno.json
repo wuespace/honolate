@@ -1,6 +1,6 @@
 {
   "name": "@wuespace/honolate",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "tasks": {
     "dev": "deno run -A --watch example/main.tsx",
