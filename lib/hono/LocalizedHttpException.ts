@@ -91,7 +91,7 @@ export class LocalizedHttpException extends HTTPException {
     super(options.status ?? 500, {
       ...options,
     });
-    this.message = `<${this.errorId}> ${options.technicalMessage}`;
+    this.message = options.technicalMessage ? `<${this.errorId}> ${options.technicalMessage}` : `<${this.errorId}>`;
   }
 
   /**
