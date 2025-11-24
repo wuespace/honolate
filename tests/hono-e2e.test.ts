@@ -32,13 +32,16 @@ describe("Hono + Honolate E2E", () => {
   });
   describe("Untranslated text", () => {
     it("GET /untranslated should return untranslated text", async () => {
-      const resDefault = await (await testApp.untranslated.$get({})).text();
-      const resEn = await (await testApp.untranslated.$get({
+      const resDefaultResp = await testApp.untranslated.$get({});
+      const resDefault = await resDefaultResp.text();
+      const resEnResp = await testApp.untranslated.$get({
         query: { lang: "en" },
-      })).text();
-      const resDe = await (await testApp.untranslated.$get({
+      });
+      const resEn = await resEnResp.text();
+      const resDeResp = await testApp.untranslated.$get({
         query: { lang: "de" },
-      })).text();
+      });
+      const resDe = await resDeResp.text();
 
       expect(resDefault).toBe("Untranslated text");
       expect(resEn).toBe("Untranslated text");
