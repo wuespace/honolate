@@ -2,7 +2,7 @@ import { HTTPException } from "@hono/hono/http-exception";
 import type { LazyLocalizedString } from "./LazyLocalizedString.ts";
 
 /**
- * Options for creating a LocalizedError.
+ * Options for creating a LocalizedHttpException.
  */
 export interface LocalizedHttpExceptionOptions {
   /**
