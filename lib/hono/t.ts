@@ -1,3 +1,5 @@
+import { raw } from "@hono/hono/html";
+import type { HtmlEscapedString } from "@hono/hono/utils/html";
 import { unescapeKey } from "../common/unescapeKey.ts";
 import { ensureLazyLocalyzedString } from "./ensureLazyLocalyzedString.ts";
 import { getLocalizationMap } from "./getLocalizationMap.ts";
@@ -46,17 +48,30 @@ import type { LocalyzedStringValue } from "./LocalyzedStringValue.ts";
 export function t(
   strings: TemplateStringsArray,
   ...values: LocalyzedStringValue[]
-): string;
-export function t(lls: LazyLocalyzedString): string;
+): string | HtmlEscapedString;
+export function t(lls: LazyLocalyzedString): string | HtmlEscapedString;
+export function t(raw: string): string | HtmlEscapedString;
 export function t(
-  string: TemplateStringsArray | LazyLocalyzedString,
+  string: TemplateStringsArray | LazyLocalyzedString | string,
   ...values: LocalyzedStringValue[]
-): string {
+): string | HtmlEscapedString {
+  if (typeof string === "string") {
+    // simple string, return as is
+    string = {
+      localizationKey: string,
+      values: [],
+    };
+  }
   const lls = ensureLazyLocalyzedString(string, values);
   const localizationValues = getLocalizationMap();
 
   if (!(lls.localizationKey in localizationValues)) {
     // Key not found, return default value
+    localizationValues[lls.localizationKey] = lls.localizationKey;
+  }
+
+  if (localizationValues[lls.localizationKey].length === 0) {
+    // Untranslated string, use key as value
     localizationValues[lls.localizationKey] = lls.localizationKey;
   }
 
@@ -81,5 +96,5 @@ export function t(
     }
   }
 
-  return unescapeKey(result);
+  return raw(unescapeKey(result));
 }

@@ -22,6 +22,7 @@ app.get("/", (c) => {
       <div>
         {t`Welcome to the {{}}}}{{ {0} {1} {{0}} {{1}} homepage ${useRequestContext().req.url}!`}
         {t`Hello world!`}
+        {t`Test: ${<code>{t`Hello!`}</code>}`}
         <LocalePrinter />
       </div>
     )),
