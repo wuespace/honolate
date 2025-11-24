@@ -1,6 +1,7 @@
 import { expandGlob } from "@std/fs";
 import * as ts from "typescript";
 import type { Extractions } from "./Extractions.ts";
+import { escapeKey } from "../common/escapeKey.ts";
 
 /**
  * Represents a TypeScript source file and provides utilities for parsing and extracting
@@ -86,12 +87,12 @@ export class TypeScriptSourceFile {
     let templateString: string;
     const tpl = node.template;
     if (ts.isNoSubstitutionTemplateLiteral(tpl)) {
-      templateString = tpl.text;
+      templateString = escapeKey(tpl.text);
     } else if (ts.isTemplateExpression(tpl)) {
-      let parts = tpl.head.text;
+      let parts = escapeKey(tpl.head.text);
       tpl.templateSpans.forEach((_, index) => {
         const span = tpl.templateSpans[index];
-        parts += "{" + index + "}" + span.literal.text;
+        parts += "{" + index + "}" + escapeKey(span.literal.text);
       });
       templateString = parts;
     } else {
