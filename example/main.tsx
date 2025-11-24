@@ -1,35 +1,43 @@
 import { Hono } from "@hono/hono";
 import { jsxRenderer } from "@hono/hono/jsx-renderer";
-// import { languageDetector } from '@hono/hono/language';
-import { t } from "@wuespace/honolate";
+import { lt, t, useLocale } from "@wuespace/honolate";
 import { withI18n } from "./i18n.ts";
 
-const app = new Hono();
+const lazyTerm = lt`Lazy term`;
 
-app.use(
-  "*",
-  // languageDetector({
-  // 	supportedLanguages: ['en', 'ar', 'ja', 'de'], // Must include fallback
-  // 	fallbackLanguage: 'en', // Required
-  // }),
-  withI18n,
-  jsxRenderer(),
-);
+export const app = new Hono()
+  .use(
+    withI18n,
+    jsxRenderer(),
+  )
+  .get("/text", (c) => c.text(t`Hello world!`))
+  .get("/locale", (c) => c.text(useLocale()))
+  .get("/render", (c) => c.render(<h1>{t`Hello world!`}</h1>))
+  .get("/component", (c) => c.render(<Component />))
+  .get("/async-component", (c) => {
+    return c.render(<AsyncComponent />);
+  })
+  .get("/async-component-alt", async (c) => {
+    const component = await AsyncComponent();
+    return c.render(component);
+  })
+  .get("/untranslated", (c) => c.text(t`Untranslated text`))
+  .get("/lazy", (c) => c.text(t(lazyTerm)))
+  .get(
+    "/escape-test",
+    (c) => c.text(t`This text contains ${1} {} curly braces and \\{{}}{0}.`),
+  )
+  .notFound((c) => c.text("Not Found", 404));
 
-app.get("/", (c) => {
-  return c.render(
-    <div>
-      {t`Welcome to the {{}}}}{{ {0} {1} {{0}} {{1}} homepage ${c.req.url}!`}
-      {t`Hello world!`}
-      {t`Test: ${<code>{t`Hello!`}</code>}`}
-      <LocalePrinter />
-    </div>,
-  );
-});
+import.meta.main && Deno.serve(app.fetch);
 
-function LocalePrinter() {
-  const locale = t`ABC ${3} DEF`;
-  return <div>Current locale: {locale}</div>;
+function Component() {
+  const greeting = t`Hello world!`;
+  return <h1>{greeting}</h1>;
 }
 
-Deno.serve(app.fetch);
+async function AsyncComponent() {
+  await Promise.resolve();
+  const greeting = t`Hello world!`;
+  return <h1>{greeting}</h1>;
+}
