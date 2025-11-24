@@ -49,8 +49,9 @@ export function t(
   strings: TemplateStringsArray,
   ...values: LocalyzedStringValue[]
 ): string | HtmlEscapedString;
-export function t(lls: LazyLocalyzedString): string | HtmlEscapedString;
-export function t(raw: string): string | HtmlEscapedString;
+export function t(
+  string: string | LazyLocalyzedString,
+): string | HtmlEscapedString;
 export function t(
   string: TemplateStringsArray | LazyLocalyzedString | string,
   ...values: LocalyzedStringValue[]
