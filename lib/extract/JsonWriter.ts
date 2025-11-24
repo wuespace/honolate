@@ -42,12 +42,11 @@ export class JsonWriter<T extends string> {
   }
 
   public writeAll(): void {
-    if (this.isReadOnly) {
-      return;
-    }
-
     for (const lang of Object.keys(this.config.languages) as T[]) {
       const processed = this.processLang(lang);
+      if (this.isReadOnly) {
+        continue;
+      }
       const path = normalizePath(this.config.languages[lang]);
       const content = JSON.stringify(processed, null, 2) + "\n";
       Deno.writeTextFileSync(path, content);
