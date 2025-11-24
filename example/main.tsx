@@ -19,7 +19,7 @@ app.use(
 app.get("/", (c) => {
   return c.render(
     <div>
-      {t`Welcome to the {{}}}}{{ {0} {1} {{0}} {{1}} homepage ${3}!`}
+      {t`Welcome to the {{}}}}{{ {0} {1} {{0}} {{1}} homepage ${c.req.url}!`}
       {t`Hello world!`}
       {t`Test: ${<code>{t`Hello!`}</code>}`}
       <LocalePrinter />
