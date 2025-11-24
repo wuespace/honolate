@@ -38,9 +38,8 @@ import type { LocalizedStringValue } from "./LocalizedStringValue.ts";
  *
  * app.get('/greet', c => {
  *   return c.render(
- *     const greeting = t`Hello ${c.req.param('name')}!`;
- *     return greeting;
- *   });
+ *     <p>{t`Hello ${c.req.param('name')}!`}</p>
+ *   );
  * });
  * ```
  */
