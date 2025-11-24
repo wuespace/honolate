@@ -20,21 +20,6 @@
 				<name>main</name>
 				<children>
 					<concept_node>
-						<name>ABC {0} DEF</name>
-						<description/>
-						<comment/>
-						<translations>
-							<translation>
-								<language>de-DE</language>
-								<approved>false</approved>
-							</translation>
-							<translation>
-								<language>en-US</language>
-								<approved>false</approved>
-							</translation>
-						</translations>
-					</concept_node>
-					<concept_node>
 						<name>Hello world!</name>
 						<description/>
 						<comment/>
@@ -50,17 +35,47 @@
 						</translations>
 					</concept_node>
 					<concept_node>
-						<name>Welcome to the {{}}}}{{ {0} {1} {{0}} {{1}} homepage {0}!</name>
+						<name>Lazy term</name>
 						<description/>
 						<comment/>
 						<translations>
 							<translation>
 								<language>de-DE</language>
-								<approved>true</approved>
+								<approved>false</approved>
 							</translation>
 							<translation>
 								<language>en-US</language>
-								<approved>true</approved>
+								<approved>false</approved>
+							</translation>
+						</translations>
+					</concept_node>
+					<concept_node>
+						<name>This text contains {0} \{} curly braces and \\{\{}}\{0}.</name>
+						<description/>
+						<comment/>
+						<translations>
+							<translation>
+								<language>de-DE</language>
+								<approved>false</approved>
+							</translation>
+							<translation>
+								<language>en-US</language>
+								<approved>false</approved>
+							</translation>
+						</translations>
+					</concept_node>
+					<concept_node>
+						<name>Untranslated text</name>
+						<description/>
+						<comment/>
+						<translations>
+							<translation>
+								<language>de-DE</language>
+								<approved>false</approved>
+							</translation>
+							<translation>
+								<language>en-US</language>
+								<approved>false</approved>
 							</translation>
 						</translations>
 					</concept_node>

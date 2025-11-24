@@ -1,5 +1,6 @@
 {
-  "ABC {0} DEF": "ABC {0} DEF",
   "Hello world!": "Hello world!",
-  "Welcome to the {{}}}}{{ {0} {1} {{0}} {{1}} homepage {0}!": "Welcome to the {{}}}}{{ {0} {1} {{0}} {{1}} homepage {0}!"
+  "Lazy term": "Lazy term",
+  "This text contains {0} \\{} curly braces and \\\\{\\{}}\\{0}.": "This text contains {0} \\{} curly braces and \\\\{\\{}}\\{0}.",
+  "Untranslated text": "Untranslated text"
 }
