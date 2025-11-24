@@ -34,12 +34,12 @@ repos:
         # pass_filenames: false
         description: "Type-check code using Deno's built-in type checker"
         stages: [pre-commit]
-      # - id: deno-test
-      #   name: deno-test
-      #   entry: deno task test
-      #   language: system
-      #   files: \.(ts|tsx|js|jsx)$
-      #   pass_filenames: false
-      #   always_run: true
-      #   description: "Run tests using Deno's built-in test runner"
-      #   stages: [pre-commit]
+      - id: deno-test
+        name: deno-test
+        entry: deno task test
+        language: system
+        files: \.(ts|tsx|js|jsx)$
+        pass_filenames: false
+        always_run: true
+        description: "Run tests using Deno's built-in test runner"
+        stages: [pre-commit]

@@ -5,7 +5,8 @@
   "tasks": {
     "dev": "deno run -A --watch example/main.tsx",
     "cli": "deno run -A --watch cli.ts",
-    "update:i18n": "deno run -A example/i18n.ts"
+    "update:i18n": "deno run -A example/i18n.ts",
+    "test": "deno test -A"
   },
   "exports": "./lib/mod.ts",
   "imports": {
