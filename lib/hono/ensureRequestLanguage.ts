@@ -1,6 +1,6 @@
-import { Context } from "@hono/hono";
-import { HonolateContext } from "./HonolateContext.ts";
-import { InitHonolateOptions } from "./InitHonolateOptions.ts";
+import type { Context } from "@hono/hono";
+import type { HonolateContext } from "./HonolateContext.ts";
+import type { InitHonolateOptions } from "./InitHonolateOptions.ts";
 import { runLanguageDetector } from "./runLanguageDetector.ts";
 
 /**

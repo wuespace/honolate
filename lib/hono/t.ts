@@ -1,17 +1,17 @@
 import { raw } from "@hono/hono/html";
 import type { HtmlEscapedString } from "@hono/hono/utils/html";
 import { unescapeKey } from "../common/unescapeKey.ts";
-import { ensureLazyLocalyzedString } from "./ensureLazyLocalyzedString.ts";
+import { ensureLazyLocalizedString } from "./ensureLazyLocalizedString.ts";
 import { getLocalizationMap } from "./getLocalizationMap.ts";
-import type { LazyLocalyzedString } from "./LazyLocalyzedString.ts";
-import type { LocalyzedStringValue } from "./LocalyzedStringValue.ts";
+import type { LazyLocalizedString } from "./LazyLocalizedString.ts";
+import type { LocalizedStringValue } from "./LocalizedStringValue.ts";
 
 /**
  * Resolves a localized string based on the current localization map.
 
  * @returns the localized string with placeholders filled in
  *
- * Can be used as a template string tag or as a function with a LazyLocalyzedString.
+ * Can be used as a template string tag or as a function with a LazyLocalizedString.
  *
  * Can only be called inside a functional component. To use this directly in route handlers,
  * use {@link asFC} to wrap the handler as a functional component.
@@ -24,9 +24,9 @@ import type { LocalyzedStringValue } from "./LocalyzedStringValue.ts";
  * const greeting = t`greeting.hello.${userName}`;
  * ```
  *
- * @example Example with LazyLocalyzedString:
+ * @example Example with LazyLocalizedString:
  * ```ts
- * const lls: LazyLocalyzedString = {
+ * const lls: LazyLocalizedString = {
  *   localizationKey: "greeting.hello",
  *   values: [userName],
  * };
@@ -47,14 +47,14 @@ import type { LocalyzedStringValue } from "./LocalyzedStringValue.ts";
  */
 export function t(
   strings: TemplateStringsArray,
-  ...values: LocalyzedStringValue[]
+  ...values: LocalizedStringValue[]
 ): string | HtmlEscapedString;
 export function t(
-  string: string | LazyLocalyzedString,
+  string: string | LazyLocalizedString,
 ): string | HtmlEscapedString;
 export function t(
-  string: TemplateStringsArray | LazyLocalyzedString | string,
-  ...values: LocalyzedStringValue[]
+  string: TemplateStringsArray | LazyLocalizedString | string,
+  ...values: LocalizedStringValue[]
 ): string | HtmlEscapedString {
   if (typeof string === "string") {
     // simple string, return as is
@@ -63,7 +63,7 @@ export function t(
       values: [],
     };
   }
-  const lls = ensureLazyLocalyzedString(string, values);
+  const lls = ensureLazyLocalizedString(string, values);
   const localizationValues = getLocalizationMap();
 
   if (!(lls.localizationKey in localizationValues)) {

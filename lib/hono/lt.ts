@@ -1,10 +1,10 @@
 import { escapeKey } from "../common/escapeKey.ts";
-import type { LazyLocalyzedString } from "./LazyLocalyzedString.ts";
-import type { LocalyzedStringValue } from "./LocalyzedStringValue.ts";
+import type { LazyLocalizedString } from "./LazyLocalizedString.ts";
+import type { LocalizedStringValue } from "./LocalizedStringValue.ts";
 
 /**
- * A template tag function to create a {@link LazyLocalyzedString}.
- * @returns A {@link LazyLocalyzedString} representing the localization key and its values.
+ * A template tag function to create a {@link LazyLocalizedString}.
+ * @returns A {@link LazyLocalizedString} representing the localization key and its values.
  *
  * @example
  * ```ts
@@ -35,8 +35,8 @@ import type { LocalyzedStringValue } from "./LocalyzedStringValue.ts";
  */
 export function lt(
   strings: TemplateStringsArray,
-  ...values: LocalyzedStringValue[]
-): LazyLocalyzedString {
+  ...values: LocalizedStringValue[]
+): LazyLocalizedString {
   const escaped = strings.map(escapeKey);
   let localizationKey = "";
   for (let i = 0; i < escaped.length; i++) {
