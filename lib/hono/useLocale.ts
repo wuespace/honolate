@@ -1,7 +1,7 @@
 import { currentLocaleStorage } from "./initHonolate.ts";
 
 /**
- * Returns the current locale code. Must be used within a Hono JSX Renderer context.
+ * Returns the current locale code. Must be used within the scope of the `initHonolate` middleware.
  * @returns the current locale code
  */
 export function useLocale(): string {
