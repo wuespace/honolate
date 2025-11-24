@@ -1,3 +1,4 @@
+import type { FC } from "@hono/hono/jsx";
 import type { LazyLocalyzedString } from "./LazyLocalyzedString.ts";
 
 /**
@@ -29,4 +30,8 @@ import type { LazyLocalyzedString } from "./LazyLocalyzedString.ts";
  * };
  * ```
  */
-export type LocalyzedStringValue = string | number | LazyLocalyzedString;
+export type LocalyzedStringValue =
+  | string
+  | number
+  | LazyLocalyzedString
+  | ReturnType<FC>;
