@@ -1,10 +1,10 @@
 import type { FC } from "@hono/hono/jsx";
-import type { LazyLocalyzedString } from "./LazyLocalyzedString.ts";
+import type { LazyLocalizedString } from "./LazyLocalizedString.ts";
 
 /**
  * A value passed into a localized string for interpolation.
  *
- * This can be a string, number, or another {@link LazyLocalyzedString} for nested localization.
+ * This can be a string, number, or another {@link LazyLocalizedString} for nested localization.
  *
  * For example, given the localization entry:
  *
@@ -15,23 +15,23 @@ import type { LazyLocalyzedString } from "./LazyLocalyzedString.ts";
  * }
  * ```
  *
- * You could create a `LazyLocalyzedString` for `welcomeMessage` that includes another
- * `LazyLocalyzedString` for `greeting` as its first value:
+ * You could create a `LazyLocalizedString` for `welcomeMessage` that includes another
+ * `LazyLocalizedString` for `greeting` as its first value:
  *
  * ```ts
- * const lazyGreeting: LazyLocalyzedString = {
+ * const lazyGreeting: LazyLocalizedString = {
  *   localizationKey: "greeting",
  *   values: ["Alice"]
  * };
  *
- * const lazyWelcomeMessage: LazyLocalyzedString = {
+ * const lazyWelcomeMessage: LazyLocalizedString = {
  *   localizationKey: "welcomeMessage",
  *   values: [lazyGreeting]
  * };
  * ```
  */
-export type LocalyzedStringValue =
+export type LocalizedStringValue =
   | string
   | number
-  | LazyLocalyzedString
+  | LazyLocalizedString
   | ReturnType<FC>;
