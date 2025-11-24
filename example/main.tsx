@@ -1,6 +1,6 @@
 import { Hono } from "@hono/hono";
 import { jsxRenderer } from "@hono/hono/jsx-renderer";
-import { lt, t, useLocale } from "@wuespace/honolate";
+import { LocalizedHttpException, lt, t, useLocale } from "@wuespace/honolate";
 import { withI18n } from "./i18n.ts";
 
 const lazyTerm = lt`Lazy term`;
@@ -10,6 +10,21 @@ export const app = new Hono()
     withI18n,
     jsxRenderer(),
   )
+  .onError((err, c) => {
+    const localizedError = LocalizedHttpException.fromCause(err);
+    console.error("[app]", localizedError);
+    return c.json({
+      errorId: localizedError.errorId,
+      title: t(localizedError.options.localizedTitle ?? lt`Unknown Error`),
+      message: t(
+        localizedError.options.localizedMessage ??
+          lt`An unexpected error occurred while processing your request.`,
+      ),
+      technicalMessage: localizedError.options.technicalMessage,
+    }, {
+      status: localizedError.status,
+    });
+  })
   .get("/text", (c) => c.text(t`Hello world!`))
   .get("/locale", (c) => c.text(useLocale()))
   .get("/render", (c) => c.render(<h1>{t`Hello world!`}</h1>))
@@ -27,6 +42,14 @@ export const app = new Hono()
     "/escape-test",
     (c) => c.text(t`This text contains ${1} {} curly braces and \\{{}}{0}.`),
   )
+  .get("/trigger-500", () => {
+    throw new LocalizedHttpException({
+      status: 500,
+      localizedTitle: lt`Hello world!`,
+      localizedMessage: lt`Untranslated text`,
+      technicalMessage: "Technical message",
+    });
+  })
   .notFound((c) => c.text("Not Found", 404));
 
 import.meta.main && Deno.serve(app.fetch);
