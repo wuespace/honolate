@@ -1,6 +1,11 @@
 import type { FC } from "@hono/hono/jsx";
 
 /**
+ * @deprecated This is no longer necessary as of Honolate v0.2.0, since `t` can now be used directly in route handlers.
+ * Previously, `t` used the request context, which was only available inside functional components.
+ * Now, `t` uses AsyncLocalStorage to access the localization context, making it usable directly in route handlers.
+ *
+ * @remarks
  * Converts a JSX element into a functional component.
  *
  * This is necessary to add support for hooks like `useRequestContext` within the element,

@@ -56,13 +56,6 @@ export function t(
   string: TemplateStringsArray | LazyLocalizedString | string,
   ...values: LocalizedStringValue[]
 ): string | HtmlEscapedString {
-  if (typeof string === "string") {
-    // simple string, return as is
-    string = {
-      localizationKey: string,
-      values: [],
-    };
-  }
   const lls = ensureLazyLocalizedString(string, values);
   const localizationValues = getLocalizationMap();
 

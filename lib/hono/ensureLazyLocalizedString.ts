@@ -1,3 +1,4 @@
+import { escapeKey } from "../common/escapeKey.ts";
 import type { LazyLocalizedString } from "./LazyLocalizedString.ts";
 import type { LocalizedStringValue } from "./LocalizedStringValue.ts";
 import { lt } from "./lt.ts";
@@ -10,11 +11,13 @@ import { lt } from "./lt.ts";
  * @returns the input as a LazyLocalizedString
  */
 export function ensureLazyLocalizedString(
-  input: TemplateStringsArray | LazyLocalizedString,
-  values: LocalizedStringValue[],
+  input: TemplateStringsArray | LazyLocalizedString | string,
+  values?: LocalizedStringValue[],
 ): LazyLocalizedString {
-  if (Array.isArray(input)) {
-    return lt(input as TemplateStringsArray, ...values);
+  if (typeof input === "string") {
+    return { localizationKey: escapeKey(input), values: [] };
+  } else if (Array.isArray(input)) {
+    return lt(input as TemplateStringsArray, ...(values ?? []));
   } else {
     return input as LazyLocalizedString;
   }

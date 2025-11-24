@@ -5,6 +5,15 @@ import type { HonolateContext } from "./HonolateContext.ts";
 import type { InitHonolateOptions } from "./InitHonolateOptions.ts";
 import type { LocalizedValue } from "./LocalizedValue.ts";
 import { ensureRequestLanguage } from "./ensureRequestLanguage.ts";
+import { AsyncLocalStorage } from "node:async_hooks";
+
+export const currentLocaleStorage = new AsyncLocalStorage<string>();
+export const currentLocalizedValuesStorage = new AsyncLocalStorage<
+  Record<
+    string,
+    LocalizedValue
+  >
+>();
 
 /**
  * Initializes Honolate with the given options.
@@ -54,7 +63,14 @@ export const initHonolate: <T extends string>(
 
     c.set("localizedValues", languages.get(language) || {});
 
-    return next();
+    return currentLocaleStorage.run(
+      language,
+      () =>
+        currentLocalizedValuesStorage.run(
+          c.get("localizedValues") || {},
+          next,
+        ),
+    );
   });
 };
 
