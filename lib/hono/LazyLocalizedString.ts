@@ -9,7 +9,7 @@ import type { LocalizedStringValue } from "./LocalizedStringValue.ts";
  */
 export type LazyLocalizedString = {
   /**
-   * The localization key used to look up the localized string.
+   * The escaped localization key used to look up the localized string.
    */
   localizationKey: string;
   /**

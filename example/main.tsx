@@ -1,7 +1,7 @@
 import { Hono } from "@hono/hono";
-import { jsxRenderer, useRequestContext } from "@hono/hono/jsx-renderer";
+import { jsxRenderer } from "@hono/hono/jsx-renderer";
 // import { languageDetector } from '@hono/hono/language';
-import { asFC, t } from "@wuespace/honolate";
+import { t } from "@wuespace/honolate";
 import { withI18n } from "./i18n.ts";
 
 const app = new Hono();
@@ -18,14 +18,12 @@ app.use(
 
 app.get("/", (c) => {
   return c.render(
-    asFC(() => (
-      <div>
-        {t`Welcome to the {{}}}}{{ {0} {1} {{0}} {{1}} homepage ${useRequestContext().req.url}!`}
-        {t`Hello world!`}
-        {t`Test: ${<code>{t`Hello!`}</code>}`}
-        <LocalePrinter />
-      </div>
-    )),
+    <div>
+      {t`Welcome to the {{}}}}{{ {0} {1} {{0}} {{1}} homepage ${c.req.url}!`}
+      {t`Hello world!`}
+      {t`Test: ${<code>{t`Hello!`}</code>}`}
+      <LocalePrinter />
+    </div>,
   );
 });
 
