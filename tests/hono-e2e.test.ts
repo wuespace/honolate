@@ -47,7 +47,8 @@ describe("Hono + Honolate E2E", () => {
   });
   describe("Lazy translation term", () => {
     it("GET /lazy should return localized lazy term", async () => {
-      const resDefault = await (await testApp.lazy.$get({})).text();
+      const defaultResp = await testApp.lazy.$get({});
+      const resDefault = await defaultResp.text();
       const resEn = await (await testApp.lazy.$get({
         query: { lang: "en" },
       })).text();
