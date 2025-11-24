@@ -62,7 +62,8 @@ describe("Hono + Honolate E2E", () => {
   });
   describe("Escape test", () => {
     it("GET /escape-test should return correctly escaped text", async () => {
-      const res = await (await testApp["escape-test"].$get({})).text();
+      const resObj = await testApp["escape-test"].$get({});
+      const res = await resObj.text();
       expect(res).toBe("This text contains 1 {} curly braces and \\{{}}{0}.");
       const resDe = await (await testApp["escape-test"].$get({
         query: { lang: "de" },
