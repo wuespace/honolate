@@ -13,11 +13,10 @@ import type { LocalizedStringValue } from "./LocalizedStringValue.ts";
  *
  * Can be used as a template string tag or as a function with a LazyLocalizedString.
  *
- * Can only be called inside a functional component. To use this directly in route handlers,
- * use {@link asFC} to wrap the handler as a functional component.
- *
  * This cannot be used outside of Hono request context (e.g., in plain Deno scripts),
- * since it relies on the request context to provide the current language's localization map.
+ * since it relies on the request's localization context,
+ * set by {@link import("./initHonolate.ts").initHonolate},
+ * to provide the current language's localization map.
  *
  * @example Example as template string tag:
  * ```ts
@@ -33,15 +32,15 @@ import type { LocalizedStringValue } from "./LocalizedStringValue.ts";
  * const greeting = t(lls);
  * ```
  *
- * @example Using with asFC in route handler:
+ * @example Using in route handler:
  * ```ts
- * import { asFC, t } from '@wuespace/honolate';
+ * import { t } from '@wuespace/honolate';
  *
  * app.get('/greet', c => {
- *   return c.render(asFC(() => {
+ *   return c.render(
  *     const greeting = t`Hello ${c.req.param('name')}!`;
  *     return greeting;
- *   }));
+ *   });
  * });
  * ```
  */

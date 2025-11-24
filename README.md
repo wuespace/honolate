@@ -21,18 +21,18 @@ Create an `i18n.ts` file to configure your localization settings:
 
 ```typescript
 #!/usr/bin/env -S deno run --allow-read --allow-write=./locales/ --allow-env
-import { HonolateConfig, initHonolate, runCLI } from "@wuespace/honolate";
+import { initHonolate, InitHonolateOptions, runCLI } from "@wuespace/honolate";
 
-const config: HonolateConfig = {
-  defaultLocale: "en",
-  supportedLocales: {
+const config = {
+  defaultLanguage: "en",
+  languages: {
     en: import.meta.resolve("./locales/en.json"),
     de: import.meta.resolve("./locales/de.json"),
   },
-};
+} satisfies InitHonolateOptions<string>;
 
 // CLI
-import.meta.main && await runCLI(config, import.meta.dirname);
+import.meta.main && await runCLI(config, import.meta.dirname ?? Deno.cwd());
 
 // Middleware for Hono
 export const i18n = await initHonolate(config);
@@ -73,30 +73,15 @@ Deno.serve(app);
 You can use eager strings for immediate translation:
 
 ```typescript
-import { asFC, t } from "@wuespace/honolate";
+import { t } from "@wuespace/honolate";
 
-c.render(asFC(() => (
+c.render(
   <div>
     <h1>{t`Hello world!`}</h1>
     <p>{t`We can also use variables like ${new Date()}.`}</p>
-  </div>
-)));
+  </div>,
+);
 ```
-
-Note that the `t` function internally uses `useRequestContext` to access the
-current request context. For this to work, it can only be called inside a
-component rendered with the `jsxRenderer` middleware. Here, we use `asFC` to
-create a functional component out of an inline JSX expression.
-
-Internally, all `asFC` does is to create a functional component:
-
-```typescript
-function asFC<T>(Component: () => JSX.Element) {
-  return <Component />;
-}
-```
-
-With that, everything inside the function now has access to the request context.
 
 ### Lazy strings
 
@@ -116,11 +101,11 @@ function:
 import { t } from "@wuespace/honolate";
 import { greeting } from "./greeting.ts";
 
-c.render(asFC(() => (
+c.render(
   <div>
     <h1>{t(greeting)}</h1>
-  </div>
-)));
+  </div>,
+);
 ```
 
 ### Updating localization files
