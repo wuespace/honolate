@@ -89,7 +89,7 @@ export class LocalizedHttpException extends HTTPException {
     public readonly options: LocalizedHttpExceptionOptions = {},
   ) {
     super(options.status ?? 500, {
-      ...options,
+      cause: options.cause,
     });
     this.message = options.technicalMessage ? `<${this.errorId}> ${options.technicalMessage}` : `<${this.errorId}>`;
   }
