@@ -72,6 +72,43 @@ describe("Hono + Honolate E2E", () => {
       );
     });
   });
+  describe("Error handling and LocalizedHttpException", () => {
+    const origConsoleLog = console.error;
+    const logs = new Set();
+    function before() {
+      console.error = (...args) => {
+        logs.add(args.join("\n"));
+      };
+    }
+    function after() {
+      logs.clear();
+      console.error = origConsoleLog;
+    }
+
+    it("GET /trigger-500 should return localized error response", async () => {
+      before();
+      // @ts-expect-error testing purposes
+      const resDefault = await (await testApp["trigger-500"].$get({})).json();
+      // @ts-expect-error testing purposes
+      const resEn = await (await testApp["trigger-500"].$get({
+        query: { lang: "en" },
+      })).json();
+      // @ts-expect-error testing purposes
+      const resDe = await (await testApp["trigger-500"].$get({
+        query: { lang: "de" },
+      })).json();
+
+      expect(resDefault.title).toBe("Hello world!");
+      expect(resDefault.message).toBe("Untranslated text");
+      expect(resEn.title).toBe("Hello world!");
+      expect(resEn.message).toBe("Untranslated text");
+      expect(resDe.title).toBe("Hallo Welt!");
+      expect(resDe.message).toBe("Untranslated text");
+
+      expect(logs.size).toBe(3);
+      after();
+    });
+  });
   describe("Locale", () => {
     it("GET /locale should return correct locale", async () => {
       const resDefault = await (await testApp.locale.$get({})).text();

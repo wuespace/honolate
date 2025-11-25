@@ -7,3 +7,7 @@ export { runCLI } from "./extract/runCLI.ts";
 export { useLocale } from "./hono/useLocale.ts";
 export type { LocalizedStringValue } from "./hono/LocalizedStringValue.ts";
 export type { LazyLocalizedString } from "./hono/LazyLocalizedString.ts";
+export {
+  LocalizedHttpException,
+  type LocalizedHttpExceptionOptions,
+} from "./hono/LocalizedHttpException.ts";
