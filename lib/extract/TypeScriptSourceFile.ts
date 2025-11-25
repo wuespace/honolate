@@ -89,12 +89,11 @@ export class TypeScriptSourceFile {
     if (ts.isNoSubstitutionTemplateLiteral(tpl)) {
       templateString = escapeKey(tpl.text);
     } else if (ts.isTemplateExpression(tpl)) {
-      let parts = escapeKey(tpl.head.text);
-      tpl.templateSpans.forEach((_, index) => {
-        const span = tpl.templateSpans[index];
-        parts += "{" + index + "}" + escapeKey(span.literal.text);
+      let templateParts = escapeKey(tpl.head.text);
+      tpl.templateSpans.forEach((span, index) => {
+        templateParts += "{" + index + "}" + escapeKey(span.literal.text);
       });
-      templateString = parts;
+      templateString = templateParts;
     } else {
       templateString = "";
     }
