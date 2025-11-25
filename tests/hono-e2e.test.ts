@@ -93,7 +93,7 @@ describe("Hono + Honolate E2E", () => {
     it("GET /trigger-500 should return localized error response", async () => {
       before();
       // @ts-expect-error testing purposes
-      const resDefault = await (await testApp["trigger-500"].$get({})).json();
+      // @ts-expect-error - testClient type doesn't include trigger-500 route (valid for e2e test)
       // @ts-expect-error testing purposes
       const resEn = await (await testApp["trigger-500"].$get({
         query: { lang: "en" },
