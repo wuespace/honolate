@@ -73,7 +73,7 @@ describe("Hono + Honolate E2E", () => {
         query: { lang: "de" },
       })).text();
       expect(resDe).toBe(
-        "Dieser Text enthält 1 {} geschweifte Klammern und \\{{}}{0}.",
+    const origConsoleError = console.error;
       );
     });
   });
@@ -82,7 +82,7 @@ describe("Hono + Honolate E2E", () => {
     const logs = new Set();
     function before() {
       console.error = (...args) => {
-        logs.add(args.join("\n"));
+      console.error = origConsoleError;
       };
     }
     function after() {
