@@ -1,6 +1,8 @@
 {
   "Hello world!": "Hallo Welt!",
   "Lazy term": "Fauler Begriff",
-  "This text contains {0} \\{} curly braces and \\\\{\\{}}\\{0}.": "Dieser Text enthält {0} \\{} geschweifte Klammern und \\\\{\\{}}\\{0}.",
-  "Untranslated text": ""
+  "Untranslated text": "",
+  "Unknown Error": "",
+  "An unexpected error occurred while processing your request.": "",
+  "This text contains {0} \\{} curly braces and \\\\\\{\\{}}\\{0}.": "Dieser Text enthält {0} \\{} geschweifte Klammern und \\\\\\{\\{}}\\{0}."
 }

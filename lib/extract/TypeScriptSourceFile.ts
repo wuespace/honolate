@@ -64,7 +64,7 @@ export class TypeScriptSourceFile {
     this.processNode(this.getSourceFile(), extractions);
   }
 
-  private processNode(node: ts.Node, extractions = this.extractions) {
+  private processNode(node: ts.Node, extractions: Extractions) {
     if (TypeScriptSourceFile.isTemplateString(node)) {
       this.processTemplateString(node, this.getSourceFile(), extractions);
     }
@@ -84,18 +84,17 @@ export class TypeScriptSourceFile {
     sourceFile: ts.SourceFile,
     extractions: Extractions,
   ) {
-    let templateString: string;
-    const tpl = node.template;
-    if (ts.isNoSubstitutionTemplateLiteral(tpl)) {
-      templateString = escapeKey(tpl.text);
-    } else if (ts.isTemplateExpression(tpl)) {
-      let templateParts = escapeKey(tpl.head.text);
-      tpl.templateSpans.forEach((span, index) => {
-        templateParts += "{" + index + "}" + escapeKey(span.literal.text);
+    let templateString = "";
+    const template = node.template;
+    if (ts.isNoSubstitutionTemplateLiteral(template)) {
+      templateString = escapeKey(template.text);
+    } else if (ts.isTemplateExpression(template)) {
+      let combinedTemplateParts = escapeKey(template.head.text);
+      template.templateSpans.forEach((span, index) => {
+        combinedTemplateParts += "{" + index + "}" +
+          escapeKey(span.literal.text);
       });
-      templateString = templateParts;
-    } else {
-      templateString = "";
+      templateString = combinedTemplateParts;
     }
     const { line } = sourceFile.getLineAndCharacterOfPosition(node.getStart());
     extractions.addExtraction(templateString, this.fileName, line + 1);
